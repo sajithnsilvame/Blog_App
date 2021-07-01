@@ -44,7 +44,6 @@
                             <small id="helpId" class="text-muted">Enter your email address</small>
                             </div>
 
-
                             <div class="form-group">
                             <label for="">Password</label>
                             <input type="password" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
