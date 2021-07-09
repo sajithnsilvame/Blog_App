@@ -1,3 +1,7 @@
+<?php
+ session_start()
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +20,8 @@
 <body>
     
    <?php include_once('inc/navbar.php')?>
+
+   
 
    <div class="container">
         <div class="row">
