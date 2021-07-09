@@ -9,6 +9,7 @@
        $lastname = "";
        $email = "";
        $password = "";
+       $msg = "";
 
        $firstname = input_varify ($_POST['firstname']);
        $lastname = input_varify ($_POST['lastname']);
@@ -25,18 +26,42 @@
        echo "<br>"; */
 
 
-       $query ="INSERT INTO TBL_User(Fname,Lname,email,pwd,Reg_DT) VALUES(
+       $query = "SELECT * FROM TBL_User WHERE Fname ='{$firstname}' and email ='{$email}'";
 
-           '{$firstname}','{$lastname}','{$email}','{password}',NOW()
-       )";
+       $ShowResult = mysqli_query($conn, $query);
 
-       $result =mysqli_query($conn, $query);
+       if($ShowResult){
+           if(mysqli_num_rows($ShowResult) == 1){
 
-       if($result){
-           echo "User Registration Success!";
-       }
-       else{
-           echo mysqli_error($conn);
+            $msg = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+            <strong>Sorry!</strong> This user already have registered in this system. Please use another email.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+            </div>";
+
+           }
+           else{
+            $query ="INSERT INTO TBL_User(Fname,Lname,email,pwd,Reg_DT) VALUES(
+
+                '{$firstname}','{$lastname}','{$email}','{$password}',NOW()
+                )";
+                
+                $result =mysqli_query($conn, $query);
+                
+                if($result){
+                
+                //echo "User Registration Success!";
+                
+                $msg = "<div class='alert alert-primary alert-dismissible fade show' role='alert'>
+                <strong>User Registration Success!</strong> Welcome To The Devtubes.
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+                </div>";
+                }
+                
+           }
        }
 
    }
@@ -81,6 +106,8 @@
            <div class="col-md-12">
 
               <form action="sign_up.php" method="POST" autocomplete="off">
+
+                   <?php if(!empty($msg)){echo $msg;}?>
                 
                     <div class="card mt-4">
                         <div class="card-header" id="card-header">
